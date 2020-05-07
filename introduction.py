@@ -151,6 +151,7 @@ a,b,c:500,0,500
 
 my_list = [0,1,2,3,4,5,6,144,31,546,7,23425]
 def get_min(my_list):
+    # 两层循环，数量级是n方
     for i in range(len(my_list)):
         for j in range(len(my_list)):
             if my_list[i] > my_list[j]:
