@@ -136,7 +136,7 @@ class Printer:
                 self.currentTask = None
 
     # 切换打印机状态
-    def busy(self):
+    def is_busy(self):
         if self.currentTask != None:
             return True
 
@@ -167,26 +167,35 @@ def main(numSeconds,pagesPerMinute):
     printQueue = Queue()
     watingtimes = []
 
-    for currentSecond in range(numSeconds):
+    for currentSeconds in range(numSeconds):
         if newPrintTask():
-            task = Task(currentSecond)
+            task = Task(currentSeconds)
             printQueue.enqueue(task)
         if(not labPrinter.is_busy()) and (not printQueue.isEmpty()):
             nexttask = printQueue.dequeue()
-            watingtimes.append(nexttask.waitTime(currentSecond))
+            watingtimes.append(nexttask.waitTime(currentSeconds))
             labPrinter.startNew(nexttask)
 
         labPrinter.tick()
 
-        averageWaite = sum(watingtimes)/len(watingtimes)
-        print("平均等待%6.3f 还剩%3d任务" %(averageWaite,printQueue.size()))
+    averageWaite = sum(watingtimes)/len(watingtimes)
+    print("平均等待%6.3f 还剩%3d任务" %(averageWaite,printQueue.size()))
 
 
 def newPrintTask():
     num = random.randrange(1,181)
     if num == 180:
-        reutrn True
+        return True
     else:
         return False
 
-main(3600,5)
+for i in range(10):
+    main(3600,5)
+
+
+
+
+'''
+    1.学生数变为20
+    2.不局限在一个小时之内的haunt，这些学生都打印完需要多长时间
+'''
