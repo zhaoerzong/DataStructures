@@ -1,13 +1,18 @@
-# def bubbleSort(alist):
-#     for passnum in range(len(nums)-1,0,-1):
-#         for i in range(passnum):
-#             if nums[i] > nums[i+1]:
-#                 temp = nums[i]
-#                 nums[i] = nums[i+1]
-#                 nums[i+1] = temp
-# nums = [5,2,3,1]
-# bubbleSort(nums)
-# print(nums)
+
+
+'''
+
+
+def bubbleSort(alist):
+    for passnum in range(len(nums)-1,0,-1):
+        for i in range(passnum):
+            if nums[i] > nums[i+1]:
+                temp = nums[i]
+                nums[i] = nums[i+1]
+                nums[i+1] = temp
+nums = [5,2,3,1]
+bubbleSort(nums)
+print(nums)
 
 # 选择排序
 def seletcSort(alist):
@@ -25,7 +30,6 @@ seletcSort(nums)
 print(nums)
 
 
-'''
     LeetCode第912题 排序数组
     给一个整数数组nums,将数组升序排列
     nums = [5,2,3,1]
@@ -136,4 +140,96 @@ def insertSort(alist):
 alist = [54,26,93,17,77,31,44,55,20]
 insertSort(alist)
 print(alist)
+'''
+
+
+
+'''
+    四丶希尔排序(缩小间隔排序)：
+        以插入排序为基础，将原来要排序的列表划分成一些子列表，再对每一个子列表执行插入操作。从而实现对插入排序性能的改进。
+        关键：划分子列表的特定方法
+        alist = [54,26,93,17,77,31,44,55,20]
+
+        1.以3为间隔来划分，分成3个子列表
+            [54,17,44]   [17,26,93,44,77,31,54,55,20]
+            [26,77,55]   [17,26,93,44,55,31,54,77,20]
+            [93,31,20]   [17,26,20,44,55,31,54,77,93]
+
+            再进行标准插入排序：[17] [26,20,44,55,31,54,77,93]
+            优化了比对和移动的次数
+
+
+        2.以2为间隔来划分，分成5个子列表
+            [54,93,77,44,20] [20,26,44,17,54,31,77,55,93]
+            [26,17,31,55]    [20,17,44,26,54,31,77,55,93]
+'''
+
+
+
+'''
+    五丶归并排序
+        具体做法：递归算法，不断的将列表拆分为一半。
+        如果列表为空或者只有一个元素，那么根据定义，他就被排好了
+
+
+        alist = [54,26,93,17,77,31,44,55,20]
+
+        第1次拆分： [54,26,93,17]           [77,31,44,55,20]
+        第2次拆分： [54,26]  [93,17]        [77,31]   [44,55,20]
+        第3次拆分： [54] [26] [93] [17]     [77] [31]  [44] [55,20] 
+        第4次拆分： [54] [26] [93] [17]     [77] [31]  [44] [55] [20] 
+
+
+        [54] [26] [93] [17]     [77] [31]  [44] [55] [20] 
+         [26,54]    [17,93]       [31,77]       [20,55]
+            [17,26,54,93]                      [20,44,55]
+                                      [20,31,44,55,77]
+                    [17,20,26,31,44,54,55,77,93]
+'''
+
+
+def mergeSort(alist):
+    if len(alist) > 1:
+        mid = len(alist)//2
+        lefthalf = alist[:mid]
+        righthalf = alist[mid:]
+
+        mergeSort(lefthalf)
+        mergeSort(righthalf)
+
+        i = 0
+        j = 0
+        k = 0
+
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] < righthalf[j]:
+                alist[k] = lefthalf[i]
+                i = i+1
+            else:
+                alist[k] = righthalf[j]
+                j = j+1
+            k = k+1
+
+        while i < len(lefthalf):
+            alist[k] = lefthalf[i]
+            i = i+1
+            k = k+1
+        
+        while j < len(righthalf):
+            alist[k] = righthalf[j]
+            j = j+1
+            k = k+1
+
+        print("归并：",alist)
+
+
+alist = [54,26,93,17,77,31,44,55,20]
+mergeSort(alist)
+print(alist)
+
+
+
+
+'''
+    六丶快速排序
 '''
